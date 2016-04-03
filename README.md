@@ -5,7 +5,7 @@ A simple programmable slackbot. Meant to allow for a easy interface to create cu
 `pip install git+https://github.com/gmccoy42/pyslackbot.git`
 
 ## Usage
-```
+```python
 from pyslackbot.pyslackbot import SlackBot
 
 def run():
@@ -17,7 +17,7 @@ bot.add_handler_csv("data.csv")
 ```
 
 Data.csv
-```
+```csv
 message, reply
 hello, world
 hi, howdy
