@@ -11,4 +11,5 @@ setup(
     requires=[
         'slackclient',
     ],
+    packages = ['pyslackbot'],
 )

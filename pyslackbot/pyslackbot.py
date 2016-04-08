@@ -23,7 +23,6 @@ class SlackBot(object):
 
     def get_handler(self, handler_id):
         for h in self.handlers:
-            print(h)
             if h.handler_id == handler_id:
                 return h
         return None
