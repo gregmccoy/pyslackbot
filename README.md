@@ -13,20 +13,35 @@ def run():
 
 def get_time():
     handler = bot.get_handler("TIME")
-    handler.reply.format(datetime.now())
+    handler.reply[0] = handler.reply[0].format(datetime.now())
     
 bot = SlackBot("<TOKEN>", True)
-bot.add_handler("ID-4", "hello", "", run)
-bot.add_handler_csv("data.csv")
+bot.add_handler("ID-4", "print", "", run)
+bot.add_handler_json("data.json")
 bot.add_handler("TIME", "What time is it?", "{}", get_time)
 ```
 
 
+data.json
+```json
 Data.csv
-```csv
-ID-1, message, reply
-ID-2, hello, world
-ID-3, hi, howdy
+{
+    "handlers": [
+        {
+            "id":"#GREET",
+            "message": [
+                "Hello",
+                "Hi",
+                "Howdy"
+            ],
+            "reply": [ 
+                "Hello",
+                "Hi",
+                "Howdy"
+            ]
+        },
+    ]
+}
 ```
 
 
