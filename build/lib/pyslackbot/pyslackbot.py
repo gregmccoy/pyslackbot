@@ -23,7 +23,6 @@ class SlackBot(object):
 
     def get_handler(self, handler_id):
         for h in self.handlers:
-            print(h)
             if h.handler_id == handler_id:
                 return h
         return None
@@ -77,6 +76,7 @@ class SlackBot(object):
             if handler.con:
                 if handler.message != "NULL":
                     if handler.message.lower() in message.lower() or message.lower() in handler.message.lower():
+                        handler.received = message
                         self.run_handler(handler, channel)
 
             elif handler.message == message:
@@ -94,9 +94,12 @@ class SlackBot(object):
         if handler.reply != "" and handler.reply != None:
             if handler.channel != None:
                 channel = handler.channel
+            if channel == None:
+                print("Error: No channel selected")
+                return 1
             if self.debug:
-                print("Replying - " + str(handler.reply))
-            self.sc.rtm_send_message(channel, str(handler.reply))
+                print("Reply: " + str(channel) + "  - " + str(handler.reply))
+            self.sc.rtm_send_message(str(channel), str(handler.reply))
 
 
 
@@ -109,4 +112,5 @@ class SlackHandler(object):
         self.run = run
         self.con = con
         self.channel = channel
+        self.received = None
 
