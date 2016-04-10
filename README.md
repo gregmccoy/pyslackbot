@@ -24,7 +24,6 @@ bot.add_handler("TIME", "What time is it?", "{}", get_time)
 
 data.json
 ```json
-Data.csv
 {
     "handlers": [
         {
