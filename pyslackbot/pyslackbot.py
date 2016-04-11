@@ -101,10 +101,10 @@ class SlackBot(object):
                 print("Excuting - " + str(handler.run))
             try:
                 handler.run()
-            except:
+            except Exception as e:
                 print("Exception during handler function")
+                print(e)
 
-        print(handler.reply)
         if handler.reply != [""] and handler.reply != None:
             if handler.channel != None:
                 channel = handler.channel
@@ -116,6 +116,7 @@ class SlackBot(object):
             if self.debug:
                 print("Reply: " + str(channel) + "  - " + str(reply))
             self.sc.rtm_send_message(str(channel), str(reply))
+            handler.reply = handler.org_reply
 
 
 
@@ -125,6 +126,7 @@ class SlackHandler(object):
         self.handler_id = handler_id
         self.message = message
         self.reply = reply
+        self.org_reply = reply
         self.run = run
         self.channel = channel
         self.received = None
