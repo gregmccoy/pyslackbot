@@ -44,40 +44,132 @@
 <dt id="pyslackbot.SlackBot">
 <em class="property">class </em><code class="descclassname">pyslackbot.</code><code class="descname">SlackBot</code><span class="sig-paren">(</span><em>bot_id</em>, <em>debug=False</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Handles Slackbot interface</p>
+<p>Base class from the slackbot, create a bot and listens for messages.
+Handles messages using handlers.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>bot_id</strong> (<em>str</em>) &#8211; The SlackAPI token used to create the bot.</li>
+<li><strong>debug</strong> (<em>bool</em>) &#8211; Determines if debug mode is enabled.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 <dl class="method">
 <dt id="pyslackbot.SlackBot.add_handler">
 <code class="descname">add_handler</code><span class="sig-paren">(</span><em>handler_id</em>, <em>msg</em>, <em>reply</em>, <em>run=None</em>, <em>channel=None</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.add_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.add_handler" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a handler</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>handler_id</strong> (<em>str</em>) &#8211; Unique ID of handler.</li>
+<li><strong>msg</strong> (<em>str</em>) &#8211; Message that the handler will watch for.</li>
+<li><strong>reply</strong> (<em>str</em>) &#8211; Reply to be send when message is recieved.</li>
+<li><strong>run</strong> (<em>Optional [func]</em>) &#8211; function to be run when message is recieved.</li>
+<li><strong>channel</strong> (<em>Optional [str]</em>) &#8211; Channel reply will be sent to.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyslackbot.SlackBot.add_handler_json">
 <code class="descname">add_handler_json</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.add_handler_json"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.add_handler_json" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Creates a handler based on json file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>data</strong> (<em>str</em>) &#8211; File location of json file.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyslackbot.SlackBot.get_handler">
 <code class="descname">get_handler</code><span class="sig-paren">(</span><em>handler_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.get_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.get_handler" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Gets a handler based on ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handler_id</strong> (<em>str</em>) &#8211; Unique ID of handler.</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Handler if ID matches a handler, otherwise None</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyslackbot.SlackBot.parse_message">
 <code class="descname">parse_message</code><span class="sig-paren">(</span><em>message</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.parse_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.parse_message" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Checks message for handler</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>message</strong> (<em>str</em>) &#8211; Message that was recieved</li>
+<li><strong>channel</strong> (<em>str</em>) &#8211; Channel of the message recieved</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyslackbot.SlackBot.run_handler">
 <code class="descname">run_handler</code><span class="sig-paren">(</span><em>handler</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.run_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.run_handler" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Sends reply and run handler functions</p>
+<p>Sends the reply message over slack and executes the function if
+it is not None.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>handler</strong> (<a class="reference internal" href="#pyslackbot.SlackHandler" title="pyslackbot.SlackHandler"><code class="xref py py-class docutils literal"><span class="pre">SlackHandler</span></code></a>) &#8211; Handler that needs to be triggered</li>
+<li><strong>channel</strong> (<em>str</em>) &#8211; Channel of the message recieved</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyslackbot.SlackBot.trigger_handler">
 <code class="descname">trigger_handler</code><span class="sig-paren">(</span><em>handler_id</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.trigger_handler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.trigger_handler" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Triggers handler based on ID</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>handler_id</strong> (<em>str</em>) &#8211; Unique ID of handler.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="method">
 <dt id="pyslackbot.SlackBot.watch_message">
 <code class="descname">watch_message</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackBot.watch_message"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackBot.watch_message" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Watchs for message on slack</p>
+<p>Thread that constatnly watchs for new messages, If the bot is tagged
+in the message it will check the handlers to see if there is a handler
+for that message.</p>
+</dd></dl>
 
 </dd></dl>
 
@@ -85,6 +177,25 @@
 <dt id="pyslackbot.SlackHandler">
 <em class="property">class </em><code class="descclassname">pyslackbot.</code><code class="descname">SlackHandler</code><span class="sig-paren">(</span><em>handler_id</em>, <em>message</em>, <em>reply</em>, <em>run</em>, <em>channel</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/pyslackbot.html#SlackHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#pyslackbot.SlackHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Handle message triggers and replies</p>
+<p>Class used to create handlers for messages and replies.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>handler_id</strong> (<em>str</em>) &#8211; A unique ID for the handler.</li>
+<li><strong>message</strong> (<em>list</em>) &#8211; List of messages that with trigger the handler.</li>
+<li><strong>reply</strong> (<em>list</em>) &#8211; List of replies to send back when the message is received.</li>
+<li><strong>org_reply</strong> (<em>list</em>) &#8211; Copy of reply to allow reseting reply after it is formatted.</li>
+<li><strong>run</strong> (<em>func</em>) &#8211; An function that will be run when message is received.</li>
+<li><strong>channel</strong> (<em>channel</em>) &#8211; Channel that the reply will be sent to.</li>
+<li><strong>received</strong> (<em>channel</em>) &#8211; Initalizes as None, will be set to the message recievied.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

@@ -45,6 +45,15 @@
 <span class="kn">import</span> <span class="nn">random</span>
 
 <div class="viewcode-block" id="SlackBot"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot">[docs]</a><span class="k">class</span> <span class="nc">SlackBot</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handles Slackbot interface</span>
+
+<span class="sd">    Base class from the slackbot, create a bot and listens for messages.</span>
+<span class="sd">    Handles messages using handlers.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        bot_id (str): The SlackAPI token used to create the bot.</span>
+<span class="sd">        debug (bool): Determines if debug mode is enabled.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bot_id</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">sc</span> <span class="o">=</span> <span class="n">SlackClient</span><span class="p">(</span><span class="n">bot_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="s">&quot;&quot;</span>
@@ -59,16 +68,39 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span> <span class="o">=</span> <span class="p">[]</span>
 
 <div class="viewcode-block" id="SlackBot.trigger_handler"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.trigger_handler">[docs]</a>    <span class="k">def</span> <span class="nf">trigger_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Triggers handler based on ID</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler_id (str): Unique ID of handler.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">handler</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_handler</span><span class="p">(</span><span class="n">handler_id</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">run_handler</span><span class="p">(</span><span class="n">handler</span><span class="p">,</span> <span class="n">handler</span><span class="o">.</span><span class="n">channel</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SlackBot.get_handler"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.get_handler">[docs]</a>    <span class="k">def</span> <span class="nf">get_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_id</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Gets a handler based on ID</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler_id (str): Unique ID of handler.</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">            Handler if ID matches a handler, otherwise None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">h</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">h</span><span class="o">.</span><span class="n">handler_id</span> <span class="o">==</span> <span class="n">handler_id</span><span class="p">:</span>
                 <span class="k">return</span> <span class="n">h</span>
         <span class="k">return</span> <span class="bp">None</span></div>
 
 <div class="viewcode-block" id="SlackBot.add_handler"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.add_handler">[docs]</a>    <span class="k">def</span> <span class="nf">add_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_id</span><span class="p">,</span> <span class="n">msg</span><span class="p">,</span> <span class="n">reply</span><span class="p">,</span> <span class="n">run</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">channel</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a handler</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler_id (str): Unique ID of handler.</span>
+<span class="sd">            msg (str): Message that the handler will watch for.</span>
+<span class="sd">            reply (str): Reply to be send when message is recieved.</span>
+<span class="sd">            run (Optional [func]): function to be run when message is recieved.</span>
+<span class="sd">            channel (Optional [str]): Channel reply will be sent to.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">msgs</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="n">replys</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">reply</span><span class="p">)</span> <span class="ow">is</span> <span class="nb">str</span><span class="p">:</span>
@@ -87,6 +119,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SlackBot.add_handler_json"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.add_handler_json">[docs]</a>    <span class="k">def</span> <span class="nf">add_handler_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Creates a handler based on json file</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            data (str): File location of json file.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
             <span class="n">reader</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">[</span><span class="s">&quot;handlers&quot;</span><span class="p">]:</span>
@@ -103,6 +141,13 @@
 
 
 <div class="viewcode-block" id="SlackBot.watch_message"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.watch_message">[docs]</a>    <span class="k">def</span> <span class="nf">watch_message</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Watchs for message on slack</span>
+
+<span class="sd">        Thread that constatnly watchs for new messages, If the bot is tagged</span>
+<span class="sd">        in the message it will check the handlers to see if there is a handler</span>
+<span class="sd">        for that message.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">connect</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">user</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sc</span><span class="o">.</span><span class="n">server</span><span class="o">.</span><span class="n">login_data</span><span class="p">[</span><span class="s">&quot;self&quot;</span><span class="p">][</span><span class="s">&quot;id&quot;</span><span class="p">]</span>
             <span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
@@ -124,6 +169,12 @@
                 <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="SlackBot.parse_message"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.parse_message">[docs]</a>    <span class="k">def</span> <span class="nf">parse_message</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Checks message for handler</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            message (str): Message that was recieved</span>
+<span class="sd">            channel (str): Channel of the message recieved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">for</span> <span class="n">handler</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">handlers</span><span class="p">:</span>
             <span class="k">for</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">handler</span><span class="o">.</span><span class="n">message</span><span class="p">:</span>
                 <span class="k">if</span> <span class="n">msg</span> <span class="ow">in</span> <span class="n">message</span><span class="o">.</span><span class="n">lower</span><span class="p">():</span>
@@ -136,6 +187,15 @@
                 <span class="k">return</span> <span class="mi">0</span></div>
 
 <div class="viewcode-block" id="SlackBot.run_handler"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackBot.run_handler">[docs]</a>    <span class="k">def</span> <span class="nf">run_handler</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Sends reply and run handler functions</span>
+
+<span class="sd">        Sends the reply message over slack and executes the function if</span>
+<span class="sd">        it is not None.</span>
+
+<span class="sd">        Args:</span>
+<span class="sd">            handler (:class:`SlackHandler`): Handler that needs to be triggered</span>
+<span class="sd">            channel (str): Channel of the message recieved</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">handler</span><span class="o">.</span><span class="n">run</span> <span class="o">!=</span> <span class="bp">None</span><span class="p">:</span>
             <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">debug</span><span class="p">:</span>
                 <span class="k">print</span><span class="p">(</span><span class="s">&quot;Excuting - &quot;</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">handler</span><span class="o">.</span><span class="n">run</span><span class="p">))</span>
@@ -162,6 +222,19 @@
 
 
 <div class="viewcode-block" id="SlackHandler"><a class="viewcode-back" href="../pyslackbot.html#pyslackbot.SlackHandler">[docs]</a><span class="k">class</span> <span class="nc">SlackHandler</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Handle message triggers and replies</span>
+
+<span class="sd">    Class used to create handlers for messages and replies.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        handler_id (str): A unique ID for the handler.</span>
+<span class="sd">        message (list):  List of messages that with trigger the handler.</span>
+<span class="sd">        reply (list): List of replies to send back when the message is received.</span>
+<span class="sd">        org_reply (list): Copy of reply to allow reseting reply after it is formatted.</span>
+<span class="sd">        run (func): An function that will be run when message is received.</span>
+<span class="sd">        channel (channel): Channel that the reply will be sent to.</span>
+<span class="sd">        received (channel): Initalizes as None, will be set to the message recievied.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">handler_id</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">reply</span><span class="p">,</span> <span class="n">run</span><span class="p">,</span> <span class="n">channel</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">handler_id</span> <span class="o">=</span> <span class="n">handler_id</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">message</span> <span class="o">=</span> <span class="n">message</span>
