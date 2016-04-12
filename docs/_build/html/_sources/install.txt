@@ -7,6 +7,7 @@ Install
 To install from github using pip run.
 
 .. code-block:: bash
+
     pip install git+https://github.com/gmccoy42/pyslackbot.git
 
 Importing
