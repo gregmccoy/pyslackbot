@@ -111,21 +111,24 @@ class SlackBot(object):
         if self.connect:
             self.user = self.sc.server.login_data["self"]["id"]
             while True:
-                message = self.sc.rtm_read()
-                if message:
-                    try:
-                        if message[0]["type"] == "message" and message[0]["user"] != self.user:
-                            #There is a message from a user
-                            text = message[0]["text"]
-                            if self.debug:
-                                print("Message - " + text)
-                            if self.user in text:
-                                text = text.replace("<@" + self.user + ">", "")
-                                print(text)
-                                self.parse_message(text, message[0]["channel"])
-                    except:
-                        #excepts when the message doesn't have a type, just ignore and keep going
-                        pass
+                try:
+                    message = self.sc.rtm_read()
+                    if message:
+                        try:
+                            if message[0]["type"] == "message" and message[0]["user"] != self.user:
+                                #There is a message from a user
+                                text = message[0]["text"]
+                                if self.debug:
+                                    print("Message - " + text)
+                                if self.user in text:
+                                    text = text.replace("<@" + self.user + ">", "")
+                                    self.parse_message(text, message[0]["channel"])
+                        except:
+                            #excepts when the message doesn't have a type, just ignore and keep going
+                            pass
+                except:
+                    print("Connection Problems trying again in 10 seconds")
+                    time.sleep(10)
                 time.sleep(1)
 
     def parse_message(self, message, channel):
