@@ -1,6 +1,9 @@
 # pyslackbot
 A simple programmable slackbot. Meant to allow for a easy interface to create custom slackbots. Under development.
 
+##Documentation
+http://pyslackbot.readthedocs.org/
+
 ## Install
 `pip install git+https://github.com/gmccoy42/pyslackbot.git`
 

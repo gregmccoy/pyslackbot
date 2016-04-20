@@ -1,6 +1,10 @@
 Getting Start
 =============
 
+The source code is on Github
+
+`https://github.com/gmccoy42/pyslackbot <https://github.com/gmccoy42/pyslackbot>`_
+
 Install
 +++++++
 
