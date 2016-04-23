@@ -207,3 +207,7 @@ class SlackHandler(object):
         self.channel = channel
         self.received = None
 
+    def format_reply(self, msg):
+        self.reply[0] = self.reply[0].format(msg)
+
+
