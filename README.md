@@ -16,7 +16,7 @@ def run():
 
 def get_time():
     handler = bot.get_handler("TIME")
-    handler.reply[0] = handler.reply[0].format(datetime.now())
+    handler.format_reply(datetime.now())
     
 bot = SlackBot("<TOKEN>", True)
 bot.add_handler("ID-4", "print", "", run)
