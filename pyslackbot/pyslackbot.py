@@ -78,6 +78,15 @@ class SlackBot(object):
         handler = SlackHandler(handler_id, msgs, replys, run, channel)
         self.handlers.append(handler)
 
+    def add_handler_object(self, handler):
+        """Adds a handler object of type SlackHandler
+
+        Args:
+            handler (SlackHandler): Handler to be added
+        """
+        self.handlers.append(handler)
+
+
     def add_handler_json(self, data):
         """Creates a handler based on json file
 
@@ -120,9 +129,9 @@ class SlackBot(object):
                                 text = message[0]["text"]
                                 if self.debug:
                                     print("Message - " + text)
-                                if self.user in text:
+                                if self.user in text or message[0]['channel'][0] == 'D':
                                     text = text.replace("<@" + self.user + ">", "")
-                                    self.parse_message(text, message[0]["channel"])
+                                    self.parse_message(message[0])
                         except:
                             #excepts when the message doesn't have a type, just ignore and keep going
                             pass
@@ -131,22 +140,21 @@ class SlackBot(object):
                     time.sleep(10)
                 time.sleep(1)
 
-    def parse_message(self, message, channel):
+    def parse_message(self, message):
         """Checks message for handler
 
         Args:
-            message (str): Message that was recieved
-            channel (str): Channel of the message recieved
+            message (dict): Message that was recieved
         """
         for handler in self.handlers:
             for msg in handler.message:
-                if msg in message.lower():
+                if msg in message['text'].lower():
                     handler.received = message
-                    self.run_handler(handler, channel)
+                    self.run_handler(handler, message['channel'])
                     return 0
-            if message.lower() in handler.message:
+            if message['text'].lower() in handler.message:
                 handler.received = message
-                self.run_handler(handler, channel)
+                self.run_handler(handler, message['channel'])
                 return 0
 
     def run_handler(self, handler, channel):
@@ -159,23 +167,24 @@ class SlackBot(object):
             handler (:class:`SlackHandler`): Handler that needs to be triggered
             channel (str): Channel of the message recieved
         """
+        handler_reply = None
         if handler.run != None:
             if self.debug:
                 print("Excuting - " + str(handler.run))
             try:
-                handler.run()
+                handler_reply = handler.run()
             except Exception as e:
                 print("Exception during handler function")
                 print(e)
 
-        if handler.reply != [""] and handler.reply != None:
+        if handler.reply != [""] and handler.reply != None or handler_reply:
             if handler.channel != None:
                 channel = handler.channel
             if channel == None:
                 print("Error: No channel selected")
                 return 1
 
-            reply = random.choice(handler.reply)
+            reply = handler_reply or random.choice(handler.reply)
             if self.debug:
                 print("Reply: " + str(channel) + "  - " + str(reply))
             self.sc.rtm_send_message(str(channel), str(reply))
@@ -194,7 +203,8 @@ class SlackHandler(object):
         message (list):  List of messages that with trigger the handler.
         reply (list): List of replies to send back when the message is received.
         org_reply (list): Copy of reply to allow reseting reply after it is formatted.
-        run (func): An function that will be run when message is received.
+        run (func): An function that will be run when message is received. If it returns
+            a string, it will be used for the reply.
         channel (channel): Channel that the reply will be sent to.
         received (channel): Initalizes as None, will be set to the message recievied.
     """
