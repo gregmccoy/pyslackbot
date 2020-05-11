@@ -1,7 +1,0 @@
-setup.py
-pyslackbot/pyslackbot.py
-pyslackbot.egg-info/PKG-INFO
-pyslackbot.egg-info/SOURCES.txt
-pyslackbot.egg-info/dependency_links.txt
-pyslackbot.egg-info/requires.txt
-pyslackbot.egg-info/top_level.txt
