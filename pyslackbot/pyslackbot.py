@@ -135,8 +135,9 @@ class SlackBot(object):
                         except:
                             #excepts when the message doesn't have a type, just ignore and keep going
                             pass
-                except:
+                except Exception as e:
                     print("Connection Problems trying again in 10 seconds")
+                    print(e)
                     time.sleep(10)
                 time.sleep(1)
 
