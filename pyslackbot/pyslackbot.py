@@ -139,6 +139,7 @@ class SlackBot(object):
                     print("Connection Problems trying again in 10 seconds")
                     print(e)
                     time.sleep(10)
+                    self.connect = self.sc.rtm_connect()
                 time.sleep(1)
 
     def parse_message(self, message):
